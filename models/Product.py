@@ -1,16 +1,16 @@
 import base64
 import datetime
 import json
-from models import Category
 
 from app import db
+from models import Category
 
 
 class Product(db.Model):
     __tablename__ = "Product"
 
     _id_product = db.Column(
-        "id_product", db.Integer, primary_key=True, autoincrement=True
+        "id_product", db.Integer, primary_key=True, autoincrement=True, nullable=True
     )
     _libelle = db.Column("libelle", db.String(100))
     _description = db.Column("description", db.String(500))
@@ -19,20 +19,22 @@ class Product(db.Model):
     _date_debut_promotion = db.Column("date_debut_promotion", db.String(20))
     _date_fin_promotion = db.Column("date_fin_promotion", db.String(20))
     _pourcentage_promotion = db.Column("pourcentage_promotion", db.Float)
-    #relationship one-to-many
-    _category_id = db.Column('category_id', db.Integer, db.ForeignKey('Category.id_category'), nullable=False)
+    # relationship one-to-many
+    _category_id = db.Column(
+        "category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False
+    )
 
     def __init__(
-            self,
-            id_product: int,
-            libelle: str,
-            description: str,
-            price: float,
-            image: bytes,
-            category_id: str,
-            date_debut_promotion: datetime,
-            date_fin_promotion: datetime,
-            pourcentage_promotion: float,
+        self,
+        id_product: int,
+        libelle: str,
+        description: str,
+        price: float,
+        image: bytes,
+        category_id: str,
+        date_debut_promotion: datetime,
+        date_fin_promotion: datetime,
+        pourcentage_promotion: float,
     ):
         self._id_product = id_product
         self._libelle = libelle

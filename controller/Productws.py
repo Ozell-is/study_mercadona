@@ -9,10 +9,12 @@ product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
 list_product: list = []
 
-
+print (list_product)
 @product_ws.get("/")
 def get_all_product():  # put application's code here
-    return json.dumps(list_product, default=Product.to_json)
+    # data : list[Product] = db.session.query(Product).all()
+    # return json.dumps(list_product, default=Product.to_json)
+    return render_template("catalog.html", list_products = list_product)
 
 
 @product_ws.get("/admin/<id_product>")

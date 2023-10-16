@@ -2,6 +2,7 @@ import json
 
 from app import db
 
+
 class Admin(db.Model):
     __tablename__ = "Admin"
 

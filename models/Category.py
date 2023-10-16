@@ -1,20 +1,17 @@
 import json
 
-
 from app import db
 
 
 class Category(db.Model):
     __tablename__ = "Category"
 
-    _id_category = db.Column("id_category",
-                             db.Integer,
-                             primary_key=True,
-                             autoincrement=True)
+    _id_category = db.Column(
+        "id_category", db.Integer, primary_key=True, autoincrement=True
+    )
     _libelle = db.Column("libelle", db.String(20))
-    #relationship one-to-many
-    _products = db.relationship('Product')
-
+    # relationship one-to-many
+    _products = db.relationship("Product")
 
     def __init__(self, id_category: int, libelle: str):
         self._id_category = id_category
@@ -43,7 +40,6 @@ class Category(db.Model):
             "id_category": self._id_category,
             "libelle": self._libelle,
         }.items()
-
 
     def __repr__(self):
         return self.__str__()

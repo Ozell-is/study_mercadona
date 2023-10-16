@@ -1,0 +1,102 @@
+{% extends "component/skeleton.html" %}
+
+
+    {% block title %}
+        catalog
+    {% endblock title%}
+
+{% block head %}
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+
+{% endblock %}
+
+{% block content %}
+<div class="container mtr-5 mb-2">
+    <div class="row">
+        <div class="col-md-2 col-12 border" style="background-color: deepskyblue">
+            <p class="lead text-center mb-0"></p>
+            <hr />
+            <hr />
+            <p class="lead text-center mb-0">Gender:</p><select class="form-control" name="gender">
+                <option value="all" selected>All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="unisex">Unisex</option>
+            </select>
+            <hr />
+            <hr />
+        </div>
+        <div class="col-md-10 col-12 mt-5" style="margin-bottom: 270px;padding-bottom: 0px;">
+            <div class="shopping-grid">
+                <div class="container">
+                    <div class="row">
+
+
+                        <div class="col-md-3 col-sm-6" style="padding-bottom: 0px;margin-bottom: 0px;">
+                            <div class="product-grid7">
+                                <div class="product-image7"><a href="#"><img class="pic-1" src="img-1.jpg" /><img class="pic-2" src="img-2.jpg" /></a>
+                                    <ul class="social">
+                                        <li><a class="fa fa-search"></a></li>
+                                        <li><a class="fa fa-shopping-bag"></a></li>
+                                        <li><a class="fa fa-shopping-cart"></a></li>
+                                    </ul><span class="product-new-label">New</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><a href="#">Men&#39;s Blazer</a></h3>
+                                    <div class="price"><span>$15.00</span><span>$20.00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-image7"><a href="#"><img class="pic-1" src="img-3.jpg" /><img class="pic-2" src="img-4.jpg" /></a>
+                                    <ul class="social">
+                                        <li><a class="fa fa-search"></a></li>
+                                        <li><a class="fa fa-shopping-bag"></a></li>
+                                        <li><a class="fa fa-shopping-cart"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><a href="#">Women&#39;s White Shirt</a></h3>
+                                    <div class="price"><span>$15.00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-image7"><a href="#"><img class="pic-1" src="img-5.jpg" /><img class="pic-2" src="img-6.jpg" /></a>
+                                    <ul class="social">
+                                        <li><a class="fa fa-search"></a></li>
+                                        <li><a class="fa fa-shopping-bag"></a></li>
+                                        <li><a class="fa fa-shopping-cart"></a></li>
+                                    </ul><span class="product-new-label">New</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><a href="#">Men&#39;s Blazer</a></h3>
+                                    <div class="price"><span>$15.00</span><span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-image7"><a href="#"><img class="pic-1" src="img-7.jpg" /><img class="pic-2" src="img-8.jpg" /></a>
+                                    <ul class="social">
+                                        <li><a class="fa fa-search"></a></li>
+                                        <li><a class="fa fa-shopping-bag"></a></li>
+                                        <li><a class="fa fa-shopping-cart"></a></li>
+                                    </ul><span class="product-new-label">New</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><a href="#">Men&#39;s Blazer</a></h3>
+                                    <div class="price"><span>$15.00</span><span>$20.00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="../static/bootstrap/js/bootstrap.min.js">
+{% endblock %}

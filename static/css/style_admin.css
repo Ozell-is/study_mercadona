@@ -1,0 +1,17 @@
+ul.vertical-nav-list{list-style-type:none;padding-left:0;margin-left:0}
+
+div.vertical-nav{position:absolute;display:block;background-color:#222;margin-right:90%;height:100%;z-index:1}
+
+span.active-link{width:0;height:0;float:right;border-top:10px solid transparent;border-right:20px solid #fff;border-bottom:10px solid transparent}
+
+li.vnav-li{padding-top:10px;padding-left:10px;margin-top:10px;margin-bottom:10px;padding-bottom:10px;border-top:1px solid grey;border-bottom:1px solid grey}
+
+a.vnav-link{color:black;font-size:12px}
+
+a.active-link.vnav-link{color:#fff}
+
+h4{color:#fff;padding-left:10px}
+
+li.vnav-li:HOVER{background-color:#000}
+
+a.vnav-link:HOVER{color:#fff}
