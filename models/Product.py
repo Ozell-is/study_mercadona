@@ -10,31 +10,31 @@ class Product(db.Model):
     __tablename__ = "Product"
 
     _id_product = db.Column(
-        "id_product", db.Integer, primary_key=True, autoincrement=True, nullable=True
+        "id_product", db.Integer, primary_key=True, autoincrement=True, nullable=False
     )
-    _libelle = db.Column("libelle", db.String(100))
-    _description = db.Column("description", db.String(500))
-    _price = db.Column("price", db.Float)
+    _libelle = db.Column("libelle", db.String(100), nullable=False)
+    _description = db.Column("description", db.String(500), nullable=False)
+    _price = db.Column("price", db.Float, nullable=False)
     _image = db.Column("image", db.LargeBinary)
     _date_debut_promotion = db.Column("date_debut_promotion", db.String(20))
     _date_fin_promotion = db.Column("date_fin_promotion", db.String(20))
     _pourcentage_promotion = db.Column("pourcentage_promotion", db.Float)
     # relationship one-to-many
-    _category_id = db.Column(
-        "category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False
-    )
+    _category_id = db.Column("category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False)
+    _category = db.relationship("Category", back_populates="_products", overlaps="category")
+
 
     def __init__(
-        self,
-        id_product: int,
-        libelle: str,
-        description: str,
-        price: float,
-        image: bytes,
-        category_id: str,
-        date_debut_promotion: datetime,
-        date_fin_promotion: datetime,
-        pourcentage_promotion: float,
+            self,
+            id_product: int,
+            libelle: str,
+            description: str,
+            price: float,
+            image: bytes,
+            category_id: int,
+            date_debut_promotion: datetime = None,
+            date_fin_promotion: datetime = None,
+            pourcentage_promotion: float = None,
     ):
         self._id_product = id_product
         self._libelle = libelle
@@ -49,6 +49,10 @@ class Product(db.Model):
     @property
     def id_product(self):
         return self._id_product
+
+    @id_product.setter
+    def id_product(self, id_product: int):
+        self._id_product = id_product
 
     @property
     def libelle(self):
@@ -123,7 +127,7 @@ class Product(db.Model):
             "libelle": self._libelle,
             "description": self._description,
             "price": self._price,
-            "category_id": self._category.libelle,
+            "category_id": self._category_id,
             "date_debut_promotion": self._date_debut_promotion,
             "date_fin_promotion": self._date_fin_promotion,
             "pourcentage_promotion": self._pourcentage_promotion,
@@ -140,16 +144,18 @@ class Product(db.Model):
         return self.__str__()
 
     @staticmethod
-    def from_json(json_product):
-        id_product: int = int(json_product["id_product"])
+    def from_json(json_dct):
+        id_product = None
+        if json_dct.get('id_product'):
+            id_product: int = int(json_dct["id_product"])
         return Product(
             id_product,
-            json_product["libelle"],
-            json_product["description"],
-            json_product["price"],
-            json_product["image"],
-            json_product["category_id"],
-            json_product["date_debut_promotion"],
-            json_product["date_fin_promotion"],
-            json_product["pourcentage_promotion"],
+            json_dct.get("libelle"),
+            json_dct.get("description"),
+            json_dct.get("price"),
+            json_dct.get("image"),
+            json_dct.get("category_id"),
+            json_dct.get("date_debut_promotion"),
+            json_dct.get("date_fin_promotion"),
+            json_dct.get("pourcentage_promotion"),
         )

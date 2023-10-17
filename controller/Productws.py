@@ -7,66 +7,57 @@ from models.Product import Product
 
 product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
-list_product: list = []
 
-print (list_product)
-@product_ws.get("/")
+@product_ws.get("/product")
 def get_all_product():  # put application's code here
-    # data : list[Product] = db.session.query(Product).all()
-    # return json.dumps(list_product, default=Product.to_json)
-    return render_template("catalog.html", list_products = list_product)
-
-
-@product_ws.get("/admin/<id_product>")
-def get_product_by_id(id_product: int):
-    data: list[Product] = (
-        db.session.query(Product).filter(Product.id_product == id_product).one()
-    )
+    data: list[Product] = db.session.query(Product).all()
     return json.dumps(data, default=Product.to_json)
 
 
-@product_ws.post("/admin")
+@product_ws.get("/product/<id_product>")
+def get_product_by_id(id_product: int):
+    data: Product = Product.query.get(id_product)
+    return json.dumps(data, default=Product.to_json)
+
+
+@product_ws.post("/product")
 def create_product():
     content_type = request.headers.get("Content-type")
     if content_type == "application/json":
         data: Product = Product.from_json(request.get_json())
-        list_product.append(data)
-        return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
-    return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
-
-
-@product_ws.put("/admin")
-def modify_product():
-    content_type = request.headers.get("Content-type")
-    if content_type == "application/json":
-        data: Product = json.loads(request.data)
-
-        old_product: Product = (
-            db.session.query(Produit)
-            .filter(Product.id_product == data.id_product)
-            .one()
-        )
-
-        old_product.libelle = data.libelle
-        old_product.description = data.description
-        old_product.price = data.price
-        old_product.image = data.image
-        old_product.id_category = data.id_category
+        db.session.add(data)
         db.session.commit()
         return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
     return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
 
 
-@product_ws.delete("/admin/<id_product>")
+@product_ws.put("/product/<id_product>")
+def modify_product(id_product):
+    content_type = request.headers.get("Content-type")
+    if content_type == "application/json":
+        data: Product = Product.from_json(request.get_json())
+        data_old = Product.query.get(id_product)
+        if data_old is not None:
+            data_old.libelle = data.libelle
+            data_old.description = data.description
+            data_old.price = data.price
+            data_old.image = data.image
+            data_old.category_id = data.category_id
+            data_old.date_debut_promotion = data.date_debut_promotion
+            data_old.date_fin_promotion = data.date_fin_promotion
+            data_old.pourcentage_promotion = data.pourcentage_promotion
+
+        # envoi vers la bdd
+        db.session.commit()
+        return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
+    return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
+
+
+@product_ws.delete("/product/<id_product>")
 def remove_product(id_product: int):
-    data: Product = (
-        db.session.query(Product).filter(Product.id_product == id_product).one()
-    )
-    if type(data) != None:
+    data = Product.query.get(id_product)
+    if type(data) is not None:
         db.session.delete(data)
-        return (
-            json.dumps({"success": True}),
-            200,
-            {"ContentType": "application/json"},
-        )
-    return json.dumps({"success": False}), 200, {"ContentType": "application/json"}
+        db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}

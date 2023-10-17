@@ -1,21 +1,24 @@
-from app import db
+from app import db, app
+
 from models.Product import Product
+from models.Category import Category
 
-produit = Product(
-    id_product=None,
-    libelle="Exemple de produit",
-    description="Ceci est un produit factice pour tester",
-    price=19.99,
-    image=None,  # Vous pouvez ajouter des données d'image si nécessaire
-    category_id=None,
-    date_debut_promotion="2023-01-01",
-    date_fin_promotion="2023-01-15",
-    pourcentage_promotion=10.0,
-)
 
-try:
-    db.session.add(produit)
+
+
+
+# Créez un contexte d'application
+with app.app_context():
+    # Tout d'abord, récupérez la catégorie à laquelle vous voulez lier le produit.
+    # Vous pouvez utiliser le nom de la catégorie ou son ID, selon ce qui est disponible.
+    nouvelle_category = Category (
+        id_category=None,
+        libelle="surgelées"
+    )
+
+    # Ajoutez le nouveau produit à la base de données et committez les changements
+    db.session.add(nouvelle_category)
     db.session.commit()
-    print("ok")
-except Exception as e:
-    print(f"Une erreur s'est produite : {str(e)}")
+
+    # Vérifiez que le produit a bien été créé
+    print("Nouveau produit créé avec l'ID:", nouvelle_category.id_category)
