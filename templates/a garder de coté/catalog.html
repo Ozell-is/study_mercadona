@@ -1,0 +1,86 @@
+{% extends "component/skeleton.html" %}
+
+
+    {% block title %}
+        catalog
+    {% endblock title%}
+
+{% block head %}
+        <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+        <style>
+
+        .product-grid7 {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mtr-5 mb-2">
+    <div class="row">
+        <div class="col-md-2 col-12 border" style="background-color: deepskyblue">
+            <hr />
+            <hr />
+            <p class="lead text-center mb-0">Catégories:</p>
+            <select class="form-control" name="category">
+                <option value="all" selected>All</option>
+                <option value="promotion">Promotions</option>
+                {% for category in categories %}
+                    <option value="{{ category.libelle }}">{{ category.libelle }}</option>
+
+                {% endfor %}
+            </select>
+
+            <hr />
+            <hr />
+        </div>
+
+
+                        {% for product in products %}
+                            {% if product.pourcentage_promotion is not none %}
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-content">
+                                    <div class="image">{{ product.image }}</div>
+                                    <h3 class="libelle">{{ product.libelle }}</h3>
+                                    <div class="description">{{ product.description }}</div>
+                                    <div class="price"><span>{{ product.price }}</span></div>
+                                    <div class="debut_promotion">{{ product.date_debut_promotion }}</div>
+                                    <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
+                                    <div class="promo"> - {{ product.pourcentage_promotion }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                    {% for product in products %}
+                            {% if product.pourcentage_promotion is none %}
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-content">
+                                    <div class="image">{{ product.image }}</div>
+                                    <h3 class="libelle">{{ product.libelle }}</h3>
+                                    <div class="description">{{ product.description }}</div>
+                                    <div class="price"><span>{{ product.price }}</span></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}

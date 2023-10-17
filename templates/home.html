@@ -1,10 +1,32 @@
 {% extends "component/skeleton.html" %}
 
+
+    {% block title %}
+        catalog
+    {% endblock title%}
+
 {% block head %}
-        {% endblock %}
-{% block content %}
-<p>hi</p>
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+        <style>
+
+        .product-grid7 {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
 {% endblock %}
 
+{% block content %}
+    <div class="container mtr-5 mb-2">
+    <div class="row">
+{% include 'component/category_tools.html' %}
+    {% include "component/catalog.html" %}
+
+ </div>
+</div>
 
 
+<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -1,0 +1,17 @@
+
+        <div class="col-md-2 col-12 border" style="background-color: deepskyblue">
+            <hr />
+            <hr />
+            <p class="lead text-center mb-0">Catégories:</p>
+            <select class="form-control" name="category">
+                <option value="all" selected>All</option>
+                <option value="promotion">Promotions</option>
+                {% for category in categories %}
+                    <option value="{{ category.libelle }}">{{ category.libelle }}</option>
+
+                {% endfor %}
+            </select>
+
+            <hr />
+            <hr />
+        </div>

@@ -39,7 +39,7 @@ class Category(db.Model):
         yield from {
             "id_category": self._id_category,
             "libelle": self._libelle,
-            "products" : self._products,
+
         }.items()
 
     def __repr__(self):

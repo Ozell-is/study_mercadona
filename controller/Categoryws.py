@@ -7,16 +7,19 @@ from models.Category import Category
 
 category_ws = Blueprint("categoryWs", __name__, template_folder="templates")
 
-
-@category_ws.get("/admin/category")
-def get_all_category():  # put application's code here
+@category_ws.get("/")
+def get_all_category():
+    categories = Category.query.all()
+    return render_template('', categories=categories)
+@category_ws.get("/category")
+def get_al_category():  # put application's code here
     data: list[Category] = db.session.query(Category).all()
     return json.dumps(data, default=Category.to_json)
 
 
 @category_ws.get("/category/<id_category>")
 def get_category_by_id(id_category: int):
-    data: Category =  Category.query.get(id_category)
+    data: Category = Category.query.get(id_category)
     return json.dumps(data, default=Category.to_json)
 
 
@@ -31,7 +34,7 @@ def create_category():
     return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
 
 
-@category_ws.put("category/<id_category>")
+@category_ws.put("/category/<id_category>")
 def modify_category(id_category):
     content_type = request.headers.get("Content-type")
     if content_type == "application/json":

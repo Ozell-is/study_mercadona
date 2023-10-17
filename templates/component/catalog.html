@@ -1,0 +1,42 @@
+<div class="col-md-10 col-12 mt-5" style="margin-bottom: 270px;padding-bottom: 0px;">
+            <div class="catalog-grid">
+                <div class="container mt-5 mb-2">
+                    <div class="row">
+
+{% for product in products %}
+                            {% if product.pourcentage_promotion is not none %}
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-content">
+                                    <div class="image">{{ product.image }}</div>
+                                    <h3 class="libelle">{{ product.libelle }}</h3>
+                                    <div class="description">{{ product.description }}</div>
+                                    <div class="price"><span>{{ product.price }}</span></div>
+                                    <div class="debut_promotion">{{ product.date_debut_promotion }}</div>
+                                    <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
+                                    <div class="promo"> - {{ product.pourcentage_promotion }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                    {% for product in products %}
+                            {% if product.pourcentage_promotion is none %}
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid7">
+                                <div class="product-content">
+                                    <div class="image">{{ product.image }}</div>
+                                    <h3 class="libelle">{{ product.libelle }}</h3>
+                                    <div class="description">{{ product.description }}</div>
+                                    <div class="price"><span>{{ product.price }}</span></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    </div></div></div></div>

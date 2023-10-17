@@ -4,12 +4,18 @@ from flask import Blueprint, render_template, request
 
 from bdd.database import db
 from models.Product import Product
+from models.Category import Category
 
 product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
+@product_ws.get("/")
+def get_all_product():
+    products = Product.query.all()
+    categories = Category.query.all()
+    return render_template('home.html', products=products, categories=categories)
 
-@product_ws.get("/product")
-def get_all_product():  # put application's code here
+@product_ws.get("/admin")
+def get_al_product():  # put application's code here
     data: list[Product] = db.session.query(Product).all()
     return json.dumps(data, default=Product.to_json)
 
