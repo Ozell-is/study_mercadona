@@ -1,6 +1,7 @@
 import json
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request,redirect, url_for
+from werkzeug.utils import secure_filename
 
 from bdd.database import db
 from models.Product import Product
@@ -8,62 +9,95 @@ from models.Category import Category
 
 product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
+
 @product_ws.get("/")
 def get_all_product():
     products = Product.query.all()
     categories = Category.query.all()
     return render_template('home.html', products=products, categories=categories)
 
+
 @product_ws.get("/admin")
-def get_al_product():  # put application's code here
-    data: list[Product] = db.session.query(Product).all()
-    return json.dumps(data, default=Product.to_json)
+def get_admin_page():  # put application's code here
+    products = Product.query.all()
+    categories = Category.query.all()
+    return render_template('admin_page.html', products=products, categories=categories)
 
+@product_ws.get('/admin/create/')
+def create_page():
+    return render_template('create.html')
 
-@product_ws.get("/product/<id_product>")
-def get_product_by_id(id_product: int):
-    data: Product = Product.query.get(id_product)
-    return json.dumps(data, default=Product.to_json)
-
-
-@product_ws.post("/product")
+@product_ws.post("/admin/create")
 def create_product():
-    content_type = request.headers.get("Content-type")
-    if content_type == "application/json":
-        data: Product = Product.from_json(request.get_json())
-        db.session.add(data)
+    if request.method == 'POST':
+        libelle = request.form['libelle']
+        description = request.form['description']
+        date_debut_promotion = request.form['date_debut_promotion']
+        date_fin_promotion = request.form['date_fin_promotion']
+        price = float(request.form['price'])
+        pourcentage_promotion = int(request.form['pourcentage_promotion'])
+        category_id = int(request.form['category_id'])
+
+        image = None
+        if 'image' in request.files:
+            image = request.files['image']
+
+        if image and image.filename != '':
+            # Lisez le fichier binaire de l'image
+            image_data = image.read()
+        else:
+            image_data = None
+
+        produit = Product(libelle=libelle,
+                          description=description,
+                          date_fin_promotion=date_fin_promotion,
+                          date_debut_promotion=date_debut_promotion,
+                          pourcentage_promotion=pourcentage_promotion,
+                          price=price,
+                          category_id=category_id,
+                          image=image_data)
+        db.session.add(produit)
         db.session.commit()
-        return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
-    return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
 
+        return redirect(url_for('productWs.get_admin_page'))
 
-@product_ws.put("/product/<id_product>")
-def modify_product(id_product):
-    content_type = request.headers.get("Content-type")
-    if content_type == "application/json":
-        data: Product = Product.from_json(request.get_json())
-        data_old = Product.query.get(id_product)
-        if data_old is not None:
-            data_old.libelle = data.libelle
-            data_old.description = data.description
-            data_old.price = data.price
-            data_old.image = data.image
-            data_old.category_id = data.category_id
-            data_old.date_debut_promotion = data.date_debut_promotion
-            data_old.date_fin_promotion = data.date_fin_promotion
-            data_old.pourcentage_promotion = data.pourcentage_promotion
+@product_ws.get('/<int:product_id>/edit/')
+def edit_page(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template('edit.html', product=product)
 
-        # envoi vers la bdd
+@product_ws.post('/<int:product_id>/edit/')
+def edit(product_id):
+    product = Product.query.get_or_404(product_id)
+
+    if request.method == 'POST':
+        libelle = request.form['libelle']
+        description = request.form['description']
+        date_fin_promotion = request.form['date_fin_promotion']
+        price = float(request.form['price'])
+        category_id = int(request.form['category_id'])
+        pourcentage_promotion = float(request.form['pourcentage_promotion'])
+        date_debut_promotion = request.form['date_debut_promotion']
+
+        product.libelle = libelle,
+        product.description = description,
+        product.date_fin_promotion = date_fin_promotion,
+        product.date_debut_promotion = date_debut_promotion,
+        product.pourcentage_promotion = pourcentage_promotion,
+        product.price = price,
+        product.category_id = category_id,
+        product.image = image_data
+
+        db.session.add(product)
         db.session.commit()
-        return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
-    return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
 
+        return redirect(url_for('productWs.index'))
 
-@product_ws.delete("/product/<id_product>")
-def remove_product(id_product: int):
-    data = Product.query.get(id_product)
-    if type(data) is not None:
-        db.session.delete(data)
-        db.session.commit()
-        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
-    return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+    return render_template('edit.html', product=product)
+
+@product_ws.post('/<int:product_id>/delete/')
+def delete(product_id):
+    product = Product.query.get_or_404(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('productWs.get_admin_page'))

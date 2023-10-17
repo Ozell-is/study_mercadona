@@ -1,0 +1,12 @@
+etat actuelle :
+
+Affichage des article sur http://127.0.0.1:5000 : OK
+filtre par catégories : non mis en place
+
+page http://127.0.0.1:5000/admin:
+affichage des produit : ok
+creation de produit : echec
+modification de produit: echec, acces au formulaire depuis le bouton sous les produits
+supprimer un article : OK, via le bouton
+menu vertical: lien non mis en place
+identification: non mis en place
