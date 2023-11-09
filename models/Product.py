@@ -15,7 +15,7 @@ class Product(db.Model):
     _libelle = db.Column("libelle", db.String(100), nullable=False)
     _description = db.Column("description", db.String(500), nullable=False)
     _price = db.Column("price", db.Float, nullable=False)
-    _image = db.Column("image", db.LargeBinary)
+    _image = db.Column("image", db.Text,nullable=False)
     _date_debut_promotion = db.Column("date_debut_promotion", db.Date)
     _date_fin_promotion = db.Column("date_fin_promotion", db.Date)
     _pourcentage_promotion = db.Column("pourcentage_promotion", db.Integer)
@@ -23,14 +23,13 @@ class Product(db.Model):
     _category_id = db.Column("category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False)
     _category = db.relationship("Category", back_populates="_products", overlaps="category")
 
-
     def __init__(
             self,
             id_product: int,
             libelle: str,
             description: str,
             price: float,
-            image: bytes,
+            image: str,
             category_id: int,
             date_debut_promotion: datetime = None,
             date_fin_promotion: datetime = None,
@@ -127,6 +126,7 @@ class Product(db.Model):
             "libelle": self._libelle,
             "description": self._description,
             "price": self._price,
+            "image": self._image,
             "category_id": self._category_id,
             "date_debut_promotion": self._date_debut_promotion,
             "date_fin_promotion": self._date_fin_promotion,
@@ -136,26 +136,18 @@ class Product(db.Model):
     def __str__(self):
         return json.dumps(dict(self), ensure_ascii=False)
 
-    def image_base64(self):
-        if self.image:
-            return base64.b64encode(self.image).decode("utf-8")
-
     def __repr__(self):
         return self.__str__()
 
     @staticmethod
     def from_json(json_dct):
-        id_product = None
-        if json_dct.get('id_product'):
-            id_product: int = int(json_dct["id_product"])
-        return Product(
-            id_product,
-            json_dct.get("libelle"),
-            json_dct.get("description"),
-            json_dct.get("price"),
-            json_dct.get("image"),
-            json_dct.get("category_id"),
-            json_dct.get("date_debut_promotion"),
-            json_dct.get("date_fin_promotion"),
-            json_dct.get("pourcentage_promotion"),
+        return Product (json_dct["id_product"],
+                json_dct["libelle"],
+                json_dct["description"],
+                json_dct["price"],
+                json_dct["image"],
+                json_dct["category_id"],
+                json_dct["date_debut_promotion"],
+                json_dct["date_fin_promotion"],
+                json_dct["pourcentage_promotion"],
         )

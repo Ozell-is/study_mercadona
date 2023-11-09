@@ -9,7 +9,9 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="product-grid7">
                                 <div class="product-content">
-                                    <div class="image">{{ product.image }}</div>
+                                    <div class="image">
+                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid d-block">
+                                    </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
                                     <div class="description">{{ product.description }}</div>
                                     <div class="price"><span>{{ product.price }}</span></div>
@@ -36,11 +38,16 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="product-grid7">
                                 <div class="product-content">
-                                    <div class="image">{{ product.image }}</div>
+                                    <div class="image">
+                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid ">
+                                    </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
                                     <div class="description">{{ product.description }}</div>
                                     <div class="price"><span>{{ product.price }}</span></div>
-
+                                    <div class="category">{{ product.category.libelle }}</div>
+                                    <div class="pourcentage_promotion">{{ product.pourcentage_promotion }}</div>
+                                    <div class ="date_debut_promotion">{{ product.date_debut_promotion }}</div>
+                                    <div class ="date_fin_promotion">{{ product.date_fin_promotion }}</div>
                                 </div>
                                 <a href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
 

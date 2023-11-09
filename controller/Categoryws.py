@@ -7,10 +7,13 @@ from models.Category import Category
 
 category_ws = Blueprint("categoryWs", __name__, template_folder="templates")
 
+
 @category_ws.get("/")
 def get_all_category():
     categories = Category.query.all()
     return render_template('', categories=categories)
+
+
 @category_ws.get("/category")
 def get_al_category():  # put application's code here
     data: list[Category] = db.session.query(Category).all()
@@ -42,7 +45,6 @@ def modify_category(id_category):
         data_old = Category.query.get(id_category)
         if data_old is not None:
             data_old_.libelle = data.libelle
-
 
         # envoi vers la bdd
         db.session.commit()
