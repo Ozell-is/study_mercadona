@@ -1,11 +1,12 @@
-<form method="POST" action ="{{ url_for('productWs.create_product') }}" enctype="multipart/form-data" >
+<form method="POST" action ="{{ url_for('productWs.create_product') }}" enctype="multipart/form-data" onsubmit="return validateForm();">
+
 
 
     <p>
         <label for="libelle">libelle</label>
         <input type="text" name="libelle"
                placeholder="libelle">
-        </input>
+
     </p>
 
 
@@ -13,7 +14,7 @@
         <label for="price">price</label>
         <input type="number" name="price"
                placeholder="price">
-        </input>
+
     </p>
 
     <p>
@@ -26,29 +27,31 @@
         ></textarea>
 
     <p>
-        <label for="category_id">category_id</label>
-        <input type="number" name="category_id"
-               placeholder="category_id">
-        </input>
+    <label for="category_id">Category</label>
+        <select name="category_id">
+            {% for category in category %}
+                <option value="{{ category.id_category }}">{{ category.libelle }}</option>
+            {% endfor %}
+        </select>
     </p>
     <p>
         <label for="date_debut_promotion">date debut promotion</label>
         <input type="date" name="date_debut_promotion"
                placeholder="date_debut_promotion">
-        </input>
+
     </p>
 
     <p>
         <label for="date_fin_promotion">date fin promotion</label>
         <input type="date" name="date_fin_promotion"
                placeholder="date_fin_promotion">
-        </input>
+
     </p>
 
     <p>
         <label for="pourcentage_promotion">pourcentage promotion</label>
         <input type="number" name="pourcentage_promotion">
-        </input>
+
     </p>
 
     <p>
@@ -60,3 +63,31 @@
         <button type="submit">Submit</button>
     </p>
 </form>
+<script>
+function validateDates() {
+    const today = new Date();
+    const startDateInput = document.getElementsByName('date_debut_promotion')[0];
+    const endDateInput = document.getElementsByName('date_fin_promotion')[0];
+
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+    if (startDate <= today && startDate is not) {
+        alert("La date de début de promotion doit être postérieure à la date d'aujourd'hui.");
+        return false;
+    }
+
+    if (endDate <= startDate) {
+        alert("La date de fin de promotion doit être postérieure à la date de début de promotion.");
+        return false;
+    }
+
+    return true;
+}
+
+function validateForm(){
+    return validatePrice()&& validateDates();
+}
+
+</script>
+

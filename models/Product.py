@@ -16,9 +16,9 @@ class Product(db.Model):
     _description = db.Column("description", db.String(500), nullable=False)
     _price = db.Column("price", db.Float, nullable=False)
     _image = db.Column("image", db.Text,nullable=False)
-    _date_debut_promotion = db.Column("date_debut_promotion", db.Date)
-    _date_fin_promotion = db.Column("date_fin_promotion", db.Date)
-    _pourcentage_promotion = db.Column("pourcentage_promotion", db.Integer)
+    _date_debut_promotion = db.Column("date_debut_promotion", db.Date,nullable = True)
+    _date_fin_promotion = db.Column("date_fin_promotion", db.Date,nullable = True)
+    _pourcentage_promotion = db.Column("pourcentage_promotion", db.Integer,nullable = True)
     # relationship one-to-many
     _category_id = db.Column("category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False)
     _category = db.relationship("Category", back_populates="_products", overlaps="category")

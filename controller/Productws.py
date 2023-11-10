@@ -1,7 +1,7 @@
 import base64
 import json
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,flash
 from werkzeug.utils import secure_filename
 
 from bdd.database import db
@@ -27,7 +27,9 @@ def get_admin_page():  # put application's code here
 
 @product_ws.get('/admin/create/')
 def create_page():
-    return render_template('create.html')
+
+    category = Category.query.all()
+    return render_template('create.html', category=category)
 
 
 @product_ws.post("/admin/create")
@@ -38,7 +40,6 @@ def create_product():
         if upload_image:
             image_data = base64.b64encode(upload_image.read()).decode()
 
-
             product_data = {
                 "id_product": None,
                 "libelle": request.form.get('libelle'),
@@ -46,9 +47,9 @@ def create_product():
                 "description": request.form.get('description'),
                 "price": float(request.form.get('price')),
                 "category_id": int(request.form.get('category_id')),
-                "pourcentage_promotion": request.form.get('pourcentage_promotion'),
-                "date_debut_promotion": datetime.strptime(request.form.get('date_debut_promotion'), '%d-%m').date(),
-                "date_fin_promotion": datetime.strptime(request.form.get('date_fin_promotion'), '%d-%m').date(),
+                "pourcentage_promotion": request.form.get('pourcentage_promotion',""),
+                "date_debut_promotion": request.form.get('date_debut_promotion',None),
+                "date_fin_promotion": request.form.get('date_fin_promotion',None),
             }
             new_product = Product.from_json(product_data)
             db.session.add(new_product)
@@ -60,23 +61,35 @@ def create_product():
 @product_ws.get('/<int:product_id>/edit/')
 def edit_page(product_id):
     product = Product.query.get_or_404(product_id)
-    product_edit = Product.to_json(product)
-    return render_template('edit.html', product=product_edit)
+    category = Category.query.all()
+    return render_template('edit.html', product=product, category=category)
 
 
 @product_ws.post('/<int:product_id>/edit/')
 def edit(product_id):
     product = Product.query.get_or_404(product_id)
 
+    image_data = None
 
-    libelle = request.form['libelle']
-    description = request.form['description']
-    price = float(request.form['price'])
-    category_id = int(request.form['category_id'])
-    pourcentage_promotion = request.form['pourcentage_promotion']
-    date_fin_promotion = datetime.strptime(request.form['date_fin_promotion'],'%d-%m').date()
-    date_debut_promotion = datetime.strptime(request.form['date_debut_promotion'],'%d-%m').date()
-    image_data = request.form['image']
+    if 'image' in request.files:
+        upload_image = request.files['image']
+
+        if upload_image:
+            image_data = base64.b64encode(upload_image.read()).decode()
+            product.image = image_data
+
+    product.libelle = request.form.get('libelle')
+    product.description = request.form.get('description')
+    product.price = float(request.form.get('price'))
+    product.category_id = int(request.form.get('category_id'))
+    product.pourcentage_promotion = int(request.form.get('pourcentage_promotion',None))
+    product.date_fin_promotion = request.form.get('date_fin_promotion',None)
+    product.date_debut_promotion = request.form.get('date_debut_promotion',None)
+    product.image = image_data if image_data is not None else product.image
+    db.session.commit()
+    return redirect(url_for('productWs.get_admin_page'))
+
+'''
 
     product.libelle = libelle,
     product.description = description,
@@ -86,11 +99,7 @@ def edit(product_id):
     product.price = price,
     product.category_id = category_id,
     product.image = image_data
-    product_edit = Product.from_json(product)
-    db.session.add(product_edit)
-    db.session.commit()
-
-    return redirect(url_for('productWs.index'))
+'''
 
 
 

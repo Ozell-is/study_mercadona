@@ -1,70 +1,116 @@
-<form method="post" enctype="multipart/form-data">
+<form method="POST" action ="{{ url_for('productWs.edit', product_id=product.id_product) }}" enctype="multipart/form-data" onsubmit="return validateForm();">
 
 
     <p>
         <label for="libelle">libelle</label>
         <input type="text" name="libelle"
-               value={{ product.libelle }}
+               value="{{ product.libelle }}"
                        placeholder="libelle">
-        </input>
+
     </p>
 
 
     <p>
         <label for="price">price</label>
         <input type="number" name="price"
-               value={{ product.price }}
+               value="{{ product.price }}"
                        placeholder="price">
-        </input>
+
     </p>
+
 
     <p>
         <label for="description">description</label>
         <br>
         <textarea name="description"
-                  value={{ product.description }}
-                          placeholder="description"
                   rows="15"
                   cols="60"
-        ></textarea>
+        >
+                  {{ product.description }}
+
+        </textarea>
+
 
     <p>
-        <label for="category_id">category_id</label>
-        <input type="number" name="category_id"
-               value={{ product.category_id }}
-                       placeholder="category_id">
-        </input>
-    </p>
+    <label for="category_id">Category</label>
+    <select name="category_id">
+        {% for category in category %}
+            <option value="{{ category.id_category }}" {% if category.id_category == product.category_id %}selected{% endif %}>{{ category.libelle }}</option>
+        {% endfor %}
+    </select>
+</p>
     <p>
         <label for="date_debut_promotion">date debut promotion</label>
         <input type="date" name="date_debut_promotion"
-               value={{ product.date_debut_promotion }}
+               value="{{ product.date_debut_promotion }}"
                        placeholder="date_debut_promotion">
-        </input>
+
     </p>
 
     <p>
         <label for="date_fin_promotion">date fin promotion</label>
         <input type="date" name="date_fin_promotion"
-               value={{ product.date_fin_promotion }}
+               value="{{ product.date_fin_promotion }}"
                        placeholder="date_fin_promotion">
-        </input>
+
     </p>
 
     <p>
         <label for="pourcentage_promotion">pourcentage promotion</label>
         <input type="number" name="pourcentage_promotion"
-               value={{ product.pourcentage_promotion }}>
-        </input>
+               value="{{ product.pourcentage_promotion }}">
+
     </p>
 
     <p>
         <label for="image">Image</label>
         <input type="file" name="image"
-               value={{ product.image }}>
+               value="{{ product.image }}">
     </p>
 
     <p>
         <button type="submit">Submit</button>
     </p>
 </form>
+
+<script>
+function validatePrice() {
+    let priceInput = document.getElementsByName('price')[0];
+    let price = parseFloat(priceInput.value);
+
+    if (isNaN(price) || price <= 0) {
+        alert('Le prix ne peut pas être négatif.');
+        return false;
+    }
+
+    return true;
+}
+
+function validateDates() {
+    const today = new Date();
+    const startDateInput = document.getElementsByName('date_debut_promotion')[0];
+    const endDateInput = document.getElementsByName('date_fin_promotion')[0];
+
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+    if (startDate <= today) {
+        alert("La date de début de promotion doit être postérieure à la date d'aujourd'hui.");
+        return false;
+    }
+
+    if (endDate <= startDate) {
+        alert("La date de fin de promotion doit être postérieure à la date de début de promotion.");
+        return false;
+    }
+
+    return true;
+}
+
+function validateForm(){
+    return validatePrice()&& validateDates();
+}
+
+</script>
+
+

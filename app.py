@@ -11,6 +11,8 @@ from controller.Categoryws import category_ws
 app = Flask(__name__)
 app.config.from_object(Config)
 
+app.secret_key = 't55(4y5y45y45-tg4z'
+
 app.register_blueprint(admin_ws)
 app.register_blueprint(product_ws)
 app.register_blueprint(category_ws)

@@ -8,10 +8,13 @@ from models.Category import Category
 category_ws = Blueprint("categoryWs", __name__, template_folder="templates")
 
 
+
+
 @category_ws.get("/")
 def get_all_category():
+    product = Product.query.get_or_404(product_id)
     categories = Category.query.all()
-    return render_template('', categories=categories)
+    return render_template('', categories=categories,product=product)
 
 
 @category_ws.get("/category")
@@ -37,7 +40,7 @@ def create_category():
     return json.dumps({"success": False}), 400, {"ContentType": "application/json"}
 
 
-@category_ws.put("/category/<id_category>")
+@category_ws.put("/<int:product_id>/edit/")
 def modify_category(id_category):
     content_type = request.headers.get("Content-type")
     if content_type == "application/json":

@@ -10,7 +10,7 @@
                             <div class="product-grid7">
                                 <div class="product-content">
                                     <div class="image">
-                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid d-block">
+                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid d-block" loading="lazy">
                                     </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
                                     <div class="description">{{ product.description }}</div>
@@ -19,7 +19,7 @@
                                     <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
                                     <div class="promo"> - {{ product.pourcentage_promotion }}</div>
                                 </div>
-                                <a href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
+                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
 
                                 <hr>
                                 <form method="POST"
@@ -39,7 +39,7 @@
                             <div class="product-grid7">
                                 <div class="product-content">
                                     <div class="image">
-                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid ">
+                                        <img src="data:image;base64,{{ product.image }}" class="img-fluid " loading="lazy">
                                     </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
                                     <div class="description">{{ product.description }}</div>
@@ -49,7 +49,10 @@
                                     <div class ="date_debut_promotion">{{ product.date_debut_promotion }}</div>
                                     <div class ="date_fin_promotion">{{ product.date_fin_promotion }}</div>
                                 </div>
-                                <a href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
+
+                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
+
+
 
                                 <hr>
                                 <form method="POST"
