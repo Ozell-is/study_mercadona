@@ -2,7 +2,9 @@
     <div class="catalog-grid">
         <div class="container mt-5 mb-2">
             <div class="row" id="productList">
-
+            {% if category!="all" %}
+                <h1>{{ category }}</h1>
+            {% endif %}
                 {% for product in products %}
                     <div class="col-md-3 col-sm-6">
                         <div class="product-grid7">
@@ -11,12 +13,12 @@
                                     <img src="data:image;base64,{{ product.image }}" class="img-fluid" loading="lazy">
                                 </div>
                                 <h3 class="libelle">{{ product.libelle }}</h3>
-                                <div class="category">{{ product.category.libelle }}</div>
+                                {#  <div class="category">{{ product.category.libelle }}</div>#}
                                 <div class="description">{{ product.description }}</div>
                                 <div class="price"><span>{{ product.price }}€</span></div>
 
                                 {% if product.pourcentage_promotion is not none %}
-                                    <div class="debut_promotion">{{ product.date_debut_promotion }}</div>
+                                    <div class="debut_promotion" >{{ product.date_debut_promotion }}</div>
                                     <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
                                     <div class="promo"> - {{ product.pourcentage_promotion }}</div>
                                 {% endif %}

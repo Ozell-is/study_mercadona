@@ -1,5 +1,7 @@
 import json
 
+from sqlalchemy import func
+
 from app import db
 
 
@@ -11,7 +13,7 @@ class Category(db.Model):
     # relationship one-to-many
     _products = db.relationship("Product", backref="category")
 
-    def __init__(self, id_category: int, libelle: str, ):
+    def __init__(self, id_category: int, libelle: str ):
         self._id_category = id_category
         self._libelle = libelle
 
@@ -26,6 +28,8 @@ class Category(db.Model):
     @libelle.setter
     def libelle(self, libelle: str):
         self._libelle = libelle
+
+
 
     def to_json(self):
         return self.__str__()
@@ -45,7 +49,5 @@ class Category(db.Model):
 
     @staticmethod
     def from_json(json_dct):
-        id_category = None
-        if json_dct.get('id_category'):
-            id_category: int = int(json_dct["id_category"])
-        return Category(id_category, json_dct.get("libelle"))
+        return Product(json_dct["id_category"],
+                       json_dct["libelle"])

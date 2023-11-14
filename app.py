@@ -3,10 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 from bdd.database import db
 from config.config import Config
-
 from controller.Adminws import admin_ws
-from controller.Productws import product_ws
 from controller.Categoryws import category_ws
+from controller.Productws import product_ws
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -24,5 +23,4 @@ with app.app_context():
 
 
 if __name__ == "__main__":
-
     app.run()

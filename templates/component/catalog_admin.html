@@ -4,6 +4,7 @@
             <div class="row">
 
                 {% for product in products %}
+
                     {% if product.pourcentage_promotion is not none %}
 
                         <div class="col-md-3 col-sm-6">
@@ -14,7 +15,7 @@
                                     </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
                                     <div class="description">{{ product.description }}</div>
-                                    <div class="price"><span>{{ product.price }}</span></div>
+                                    <div class="price"><span>{{ product.price }}€</span></div>
                                     <div class="debut_promotion">{{ product.date_debut_promotion }}</div>
                                     <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
                                     <div class="promo"> - {{ product.pourcentage_promotion }}</div>
@@ -45,9 +46,7 @@
                                     <div class="description">{{ product.description }}</div>
                                     <div class="price"><span>{{ product.price }}</span></div>
                                     <div class="category">{{ product.category.libelle }}</div>
-                                    <div class="pourcentage_promotion">{{ product.pourcentage_promotion }}</div>
-                                    <div class ="date_debut_promotion">{{ product.date_debut_promotion }}</div>
-                                    <div class ="date_fin_promotion">{{ product.date_fin_promotion }}</div>
+
                                 </div>
 
                                 <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>

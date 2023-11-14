@@ -2,15 +2,19 @@
     <hr/>
     <hr/>
     <p class="lead text-center mb-0">Catégories:</p>
-    <select class="form-control" name="category">
+    <select class="form-control" name="category" id="categoryFilter">
         <option value="all" selected>All</option>
         <option value="promotion">Promotions</option>
         {% for category in categories %}
             <option value="{{ category.libelle }}">{{ category.libelle }}</option>
 
         {% endfor %}
+
     </select>
+
 
     <hr/>
     <hr/>
+
+ <button id="filterButton" class="btn btn-primary btn-block">Filtrer</button>
 </div>

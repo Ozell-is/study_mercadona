@@ -1,12 +1,12 @@
 import base64
 import json
 
-from flask import Blueprint, render_template, request, redirect, url_for,flash
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
 from bdd.database import db
-from models.Product import Product
 from models.Category import Category
+from models.Product import Product
 
 product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
@@ -39,6 +39,8 @@ def create_product():
 
         if upload_image:
             image_data = base64.b64encode(upload_image.read()).decode()
+            pourcentage_promotion_str = request.form.get('pourcentage_promotion')
+            pourcentage_promotion = int(pourcentage_promotion_str) if pourcentage_promotion_str.isdigit() else None
 
             product_data = {
                 "id_product": None,
@@ -47,9 +49,9 @@ def create_product():
                 "description": request.form.get('description'),
                 "price": float(request.form.get('price')),
                 "category_id": int(request.form.get('category_id')),
-                "pourcentage_promotion": request.form.get('pourcentage_promotion',""),
-                "date_debut_promotion": request.form.get('date_debut_promotion',None),
-                "date_fin_promotion": request.form.get('date_fin_promotion',None),
+                "pourcentage_promotion": pourcentage_promotion,
+                "date_debut_promotion": request.form.get('date_debut_promotion') or None,
+                "date_fin_promotion": request.form.get('date_fin_promotion') or None,
             }
             new_product = Product.from_json(product_data)
             db.session.add(new_product)
@@ -89,17 +91,7 @@ def edit(product_id):
     db.session.commit()
     return redirect(url_for('productWs.get_admin_page'))
 
-'''
 
-    product.libelle = libelle,
-    product.description = description,
-    product.date_fin_promotion = date_fin_promotion,
-    product.date_debut_promotion = date_debut_promotion,
-    product.pourcentage_promotion = pourcentage_promotion,
-    product.price = price,
-    product.category_id = category_id,
-    product.image = image_data
-'''
 
 
 

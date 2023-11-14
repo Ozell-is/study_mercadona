@@ -87,15 +87,15 @@ function validatePrice() {
 }
 
 function validateDates() {
-    const today = new Date();
-    const startDateInput = document.getElementsByName('date_debut_promotion')[0];
-    const endDateInput = document.getElementsByName('date_fin_promotion')[0];
+    let today = new Date();
+    let startDateInput = document.getElementsByName('date_debut_promotion')[0];
+    let endDateInput = document.getElementsByName('date_fin_promotion')[0];
 
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
 
     if (startDate <= today) {
-        alert("La date de début de promotion doit être postérieure à la date d'aujourd'hui.");
+        alert("La date de début de promotion doit être postérieure à la date du jour.");
         return false;
     }
 

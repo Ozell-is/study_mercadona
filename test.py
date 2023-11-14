@@ -1,24 +1,32 @@
-from app import db, app
+import json
 
-from models.Product import Product
+from sqlalchemy import func, or_
+
+from app import app, db
 from models.Category import Category
+from models.Product import Product
 
-
-
-
-
-# Créez un contexte d'application
 with app.app_context():
-    # Tout d'abord, récupérez la catégorie à laquelle vous voulez lier le produit.
-    # Vous pouvez utiliser le nom de la catégorie ou son ID, selon ce qui est disponible.
-    nouvelle_category = Category (
-        id_category=None,
-        libelle="surgelées"
-    )
+    category_ids = [category.id_category for category in Category.query.all()]
+    print(category_ids)
+    print(Category.libelle)
 
-    # Ajoutez le nouveau produit à la base de données et committez les changements
-    db.session.add(nouvelle_category)
-    db.session.commit()
+'''
+def print_categories():
+    try:
+        with app.app_context():
+            # Récupérez toutes les catégories
+            categories = Category.query.all()
 
-    # Vérifiez que le produit a bien été créé
-    print("Nouveau produit créé avec l'ID:", nouvelle_category.id_category)
+            # Affichez les catégories dans la console
+            for category in categories:
+                print(f"Category ID: {category.id_category}, Libelle: {category.libelle}")
+
+            return json.dumps({'message': 'Categories printed in the console'})
+    except Exception as e:
+        print(str(e))
+        return json.dumps({'error': 'Une erreur s\'est produite lors de l\'impression des catégories.'}), 500
+
+# Exécutez la fonction dans le contexte de l'application Flask
+print_categories()
+'''
