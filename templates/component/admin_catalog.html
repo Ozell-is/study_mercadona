@@ -2,7 +2,7 @@
     <div class="catalog-grid">
         <div class="container mt-5 mb-2">
             <div class="row">
-
+ {% set now = date.today() %}
                 {% for product in products %}
 
                     {% if product.pourcentage_promotion is not none %}
@@ -14,11 +14,12 @@
                                         <img src="data:image;base64,{{ product.image }}" class="img-fluid d-block" loading="lazy">
                                     </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
-                                    <div class="description">{{ product.description }}</div>
                                     <div class="price"><span>{{ product.price }}€</span></div>
-                                    <div class="debut_promotion">{{ product.date_debut_promotion }}</div>
+                                    <div class="description">{{ product.description }}</div>
+                                    <div class="debut_promotion"> date promotion : {{ product.date_debut_promotion }}-</div>
                                     <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
-                                    <div class="promo"> - {{ product.pourcentage_promotion }}</div>
+                                    <div class="promo"> - {{ product.pourcentage_promotion }}%</div>
+                                    <div class="nouveau_prix">prix en promo : {{ product.price - (product.price * product.pourcentage_promotion / 100) }}€</div>
                                 </div>
                                 <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
 
@@ -43,8 +44,8 @@
                                         <img src="data:image;base64,{{ product.image }}" class="img-fluid " loading="lazy">
                                     </div>
                                     <h3 class="libelle">{{ product.libelle }}</h3>
+                                    <div class="price"><span>{{ product.price }}€</span></div>
                                     <div class="description">{{ product.description }}</div>
-                                    <div class="price"><span>{{ product.price }}</span></div>
                                     <div class="category">{{ product.category.libelle }}</div>
 
                                 </div>

@@ -8,6 +8,11 @@ from models.Admin import Admin
 admin_ws = Blueprint("adminWs", __name__, template_folder="templates")
 
 
-@admin_ws.post("/admin/login")
-def login_admin():
-    return "hello admin"
+@admin_ws.post("/createAdmin")
+def create_admin():
+    content_type = request.headers.get('Content-Type')
+    if content_type == 'application/json':
+        data : Admin = Admin.from_json(request.get_json())
+        db.session.add(data)
+        db.session.commit()
+        print('success')

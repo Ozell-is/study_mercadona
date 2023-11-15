@@ -1,4 +1,4 @@
-{% extends "component/skeleton.html" %}
+{% extends "component/admin_skeleton.html" %}
 
 
     {% block title %}
@@ -11,20 +11,33 @@
     <style>
 
         .vertical-bar {
-            float: left;
-            width: 20%;
-        }
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10%;
+    overflow-y: hidden;
+    z-index: 999;
+    background-color: deepskyblue;
+    padding: 20px;
+    }
 
-        .catalog {
-            float: left;
-            width: 80%;
-        }
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
+    .catalog {
+    margin-left: 20%;
+    width: 80%;
+    }
 
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .product-grid7 {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+    }
         </style>
 
 {% endblock %}
@@ -33,12 +46,37 @@
     <div class=" mtr-5 ">
     <div class="row">
         <div class="vertical-bar">
-  {% include 'component/verticalbar.html' %}
+  {% include 'component/admin_tools.html' %}
 
         </div>
         <div class="catalog">
 
-    {% include 'component/catalog_admin.html' %}
+    {% include 'component/admin_catalog.html' %}
         </div>
-    </div></div>
-  {% endblock %}
+    </div>
+    </div>
+
+<script>
+document.getElementById('logoutLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Déconnexion réussie !");
+
+            window.location.href = '/api/login';
+        } else {
+            console.error("Échec de la déconnexion !");
+        }
+    })
+    .catch(error => {
+        console.error("Erreur lors de la déconnexion :", error);
+    });
+});
+</script>
+{% endblock %}

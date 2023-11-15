@@ -5,27 +5,37 @@
             {% if category!="all" %}
                 <h1>{{ category }}</h1>
             {% endif %}
+             {% set now = date.today() %}
                 {% for product in products %}
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-grid7">
-                            <div class="product-content">
-                                <div class="image">
-                                    <img src="data:image;base64,{{ product.image }}" class="img-fluid" loading="lazy">
-                                </div>
-                                <h3 class="libelle">{{ product.libelle }}</h3>
-                                {#  <div class="category">{{ product.category.libelle }}</div>#}
-                                <div class="description">{{ product.description }}</div>
-                                <div class="price"><span>{{ product.price }}€</span></div>
-
-                                {% if product.pourcentage_promotion is not none %}
-                                    <div class="debut_promotion" >{{ product.date_debut_promotion }}</div>
-                                    <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
-                                    <div class="promo"> - {{ product.pourcentage_promotion }}</div>
-                                {% endif %}
-                            </div>
-                        </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="product-grid7">
+            <div class="product-content">
+                <div class="image">
+                    <img src="data:image;base64,{{ product.image }}" class="img-fluid" loading="lazy">
+                </div>
+                <h3 class="libelle">{{ product.libelle }}</h3>
+                {#  <div class="category">{{ product.category.libelle }}</div>#}
+                {% if product.pourcentage_promotion is not none and product.date_debut_promotion <= now <= product.date_fin_promotion %}
+                    <div class="price">
+                <div class="description">{{ product.description }}</div>
+                        <span style="color: red; font-weight: bold;">
+                            {{ product.price - (product.price * product.pourcentage_promotion / 100) }}€
+                        </span>
+                        <span style="text-decoration: line-through;">
+                            {{ product.price }}€
+                        </span>
                     </div>
-                {% endfor %}
+                    <div class="debut_promotion"> date promotion : {{ product.date_debut_promotion }}-</div>
+                                    <div class="fin_promotion">{{ product.date_fin_promotion }}</div>
+                    <div class="promo"> - {{ product.pourcentage_promotion }}%</div>
+                {% else %}
+                    <div class="price">{{ product.price }}€</div>
+                     <div class="description">{{ product.description }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
             </div>
         </div>
     </div>

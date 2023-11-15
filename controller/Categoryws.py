@@ -1,5 +1,6 @@
 import json
 
+from datetime import date
 from flask import Blueprint, current_app, jsonify, render_template, request
 from sqlalchemy import func, or_
 
@@ -20,6 +21,6 @@ def filter_by_category():
     # print(selected_category_libelle)
     new_catalog=filtered_product(selected_category_libelle)
 
-    products = render_template("component/catalog_update.html", products=new_catalog, category=selected_category_libelle)
+    products = render_template("component/catalog_update.html", products=new_catalog, category=selected_category_libelle, date=date)
     return jsonify({'products': products})
 

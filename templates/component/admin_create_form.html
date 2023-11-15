@@ -64,16 +64,30 @@
     </p>
 </form>
 <script>
+function validatePrice() {
+    let priceInput = document.getElementsByName('price')[0];
+    let price = parseFloat(priceInput.value);
+
+    if (isNaN(price) || price <= 0) {
+        alert('Le prix ne peut pas être négatif.');
+        return false;
+    }
+
+    return true;
+}
+
 function validateDates() {
-    const today = new Date();
-    const startDateInput = document.getElementsByName('date_debut_promotion')[0];
-    const endDateInput = document.getElementsByName('date_fin_promotion')[0];
+    let today = new Date();
+    let startDateInput = document.getElementsByName('date_debut_promotion')[0];
+    let endDateInput = document.getElementsByName('date_fin_promotion')[0];
 
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
-    if (startDate <= today && startDate is not) {
-        alert("La date de début de promotion doit être postérieure à la date d'aujourd'hui.");
+    if (startDate <= yesterday) {
+        alert("La date de début de promotion doit être postérieure à la date du jour.");
         return false;
     }
 
@@ -88,6 +102,5 @@ function validateDates() {
 function validateForm(){
     return validatePrice()&& validateDates();
 }
-
 </script>
 

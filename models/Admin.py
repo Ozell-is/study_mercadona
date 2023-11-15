@@ -1,23 +1,21 @@
 import json
 
 from app import db
+from utils.PasswordUtils import encode_password
 
 
 class Admin(db.Model):
     __tablename__ = "Admin"
 
-    _id_admin = db.Column("id_admin", db.Integer, primary_key=True, autoincrement=True)
-    _username = db.Column("username", db.String(20), nullable=False)
-    _password = db.Column("password", db.String(20), nullable=False)
+    _username = db.Column("username", db.String(20), nullable=False, primary_key=True)
+    _password = db.Column("password", db.String(150), nullable=False)
 
-    def __init__(self, id_admin: int, username: str, password: str):
-        self._id_admin = id_admin
+    def __init__(self, username: str, password: str):
+
         self._username = username
-        self._password = password
+        self._password = encode_password(password) \
+            .decode(encoding='utf-8')
 
-    @property
-    def id_admin(self):
-        return self._id_admin
 
     @property
     def username(self):
@@ -46,9 +44,8 @@ class Admin(db.Model):
     # renvoi d'un dictionnaire de la classe actuelle
     def __iter__(self):
         yield from {
-            "id_admin": self._id_admin,
             "username": self._username,
-            "password": self._password,
+            "password": self._password
         }.items()
 
     def __repr__(self):
@@ -56,6 +53,5 @@ class Admin(db.Model):
 
     # transforme lobjet json en objet python
     @staticmethod
-    def from_json(json_admin):
-        id_admin: int = int(json_admin["id_admin"])
-        return Admin(id_admin, json_admin["username"], json_admin["password"])
+    def from_json(json_dct):
+        return Admin(json_dct["username"], json_dct["password"])

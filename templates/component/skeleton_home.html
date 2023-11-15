@@ -25,15 +25,24 @@
     <nav class="navbar navbar-expand-md    " style="background-color: deepskyblue">
         <div class="container">
             <div>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{  url_for('productWs.get_all_product') }}">
                     <img src="../../static/image/mercadona_logo.png" alt="mercadona logo" width="40" height="40">
                 </a>
             </div>
             <div id="navcol-1" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">MERCADONA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{  url_for('productWs.get_all_product') }}">MERCADONA</a></li>
 
                 </ul>
+            </div>
+            <div id="navcol-1" class="d-flex flex-row-reverse align-items-center">
+                 <a href="{{ url_for('loginWs.redirection') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12">
+                    <path d="M4 15H6V20H18V4H6V9H4V3C4 2.44772 4.44772 2 5 2H19C19.5523 2 20 2.44772 20 3V21C20 21.5523
+                    19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V15ZM10 11V8L15 12L10 16V13H2V11H10Z">
+                    </path>
+                </svg>
+                 </a>>
             </div>
         </div>
     </nav>

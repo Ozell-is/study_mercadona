@@ -93,8 +93,10 @@ function validateDates() {
 
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
-    if (startDate <= today) {
+    if (startDate <= yesterday) {
         alert("La date de début de promotion doit être postérieure à la date du jour.");
         return false;
     }
