@@ -26,7 +26,7 @@
                                 <hr>
                                 <form method="POST"
                                       action="{{ url_for('productWs.delete', product_id=product.id_product) }}">
-                                    <input type="submit" value="Delete Product"
+                                    <input class='btn btn-danger' type="submit" value="Delete Product"
                                            onclick="return confirm('Are you sure you want to delete this entry?')">
                                 </form>
                             </div>
@@ -57,7 +57,7 @@
                                 <hr>
                                 <form method="POST"
                                       action="{{ url_for('productWs.delete', product_id=product.id_product) }}">
-                                    <input type="submit" value="Delete Product"
+                                    <input class="btn btn-danger" type="submit" value="Delete Product"
                                            onclick="return confirm('Are you sure you want to delete this entry?')">
                                 </form>
                             </div>

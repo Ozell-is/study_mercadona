@@ -1,6 +1,6 @@
 <form method="POST" action ="{{ url_for('productWs.edit', product_id=product.id_product) }}" enctype="multipart/form-data" onsubmit="return validateForm();">
 
-
+    <h1> EDITION DE PRODUIT </h1>
     <p>
         <label for="libelle">libelle</label>
         <input type="text" name="libelle"
@@ -69,7 +69,7 @@
     </p>
 
     <p>
-        <button type="submit">Submit</button>
+        <button class="btn btn-danger" type="submit">Submit</button>
     </p>
 </form>
 

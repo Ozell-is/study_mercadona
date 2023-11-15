@@ -11,11 +11,8 @@ class Admin(db.Model):
     _password = db.Column("password", db.String(150), nullable=False)
 
     def __init__(self, username: str, password: str):
-
         self._username = username
-        self._password = encode_password(password) \
-            .decode(encoding='utf-8')
-
+        self._password = encode_password(password).decode(encoding="utf-8")
 
     @property
     def username(self):
@@ -43,10 +40,7 @@ class Admin(db.Model):
 
     # renvoi d'un dictionnaire de la classe actuelle
     def __iter__(self):
-        yield from {
-            "username": self._username,
-            "password": self._password
-        }.items()
+        yield from {"username": self._username, "password": self._password}.items()
 
     def __repr__(self):
         return self.__str__()

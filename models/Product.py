@@ -15,25 +15,31 @@ class Product(db.Model):
     _libelle = db.Column("libelle", db.String(100), nullable=False)
     _description = db.Column("description", db.String(500), nullable=False)
     _price = db.Column("price", db.Float, nullable=False)
-    _image = db.Column("image", db.Text,nullable=False)
-    _date_debut_promotion = db.Column("date_debut_promotion", db.Date,nullable = True)
-    _date_fin_promotion = db.Column("date_fin_promotion", db.Date,nullable = True)
-    _pourcentage_promotion = db.Column("pourcentage_promotion", db.Integer,nullable = True)
+    _image = db.Column("image", db.Text, nullable=False)
+    _date_debut_promotion = db.Column("date_debut_promotion", db.Date, nullable=True)
+    _date_fin_promotion = db.Column("date_fin_promotion", db.Date, nullable=True)
+    _pourcentage_promotion = db.Column(
+        "pourcentage_promotion", db.Integer, nullable=True
+    )
     # relationship one-to-many
-    _category_id = db.Column("category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False)
-    _category = db.relationship("Category", back_populates="_products", overlaps="category")
+    _category_id = db.Column(
+        "category_id", db.Integer, db.ForeignKey("Category.id_category"), nullable=False
+    )
+    _category = db.relationship(
+        "Category", back_populates="_products", overlaps="category"
+    )
 
     def __init__(
-            self,
-            id_product: int,
-            libelle: str,
-            description: str,
-            price: float,
-            image: str,
-            category_id: int,
-            date_debut_promotion: datetime = None,
-            date_fin_promotion: datetime = None,
-            pourcentage_promotion: float = None,
+        self,
+        id_product: int,
+        libelle: str,
+        description: str,
+        price: float,
+        image: str,
+        category_id: int,
+        date_debut_promotion: datetime = None,
+        date_fin_promotion: datetime = None,
+        pourcentage_promotion: float = None,
     ):
         self._id_product = id_product
         self._libelle = libelle
@@ -141,13 +147,14 @@ class Product(db.Model):
 
     @staticmethod
     def from_json(json_dct):
-        return Product (json_dct["id_product"],
-                json_dct["libelle"],
-                json_dct["description"],
-                json_dct["price"],
-                json_dct["image"],
-                json_dct["category_id"],
-                json_dct["date_debut_promotion"],
-                json_dct["date_fin_promotion"],
-                json_dct["pourcentage_promotion"],
+        return Product(
+            json_dct["id_product"],
+            json_dct["libelle"],
+            json_dct["description"],
+            json_dct["price"],
+            json_dct["image"],
+            json_dct["category_id"],
+            json_dct["date_debut_promotion"],
+            json_dct["date_fin_promotion"],
+            json_dct["pourcentage_promotion"],
         )

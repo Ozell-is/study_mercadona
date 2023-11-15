@@ -1,0 +1,30 @@
+Name                       Stmts   Miss  Cover   Missing
+--------------------------------------------------------
+app.py                        33      1    97%   47
+bdd\__init__.py                0      0   100%
+bdd\database.py                2      0   100%
+config\__init__.py             0      0   100%
+config\config.py               5      0   100%
+controller\Adminws.py         13      6    54%   13-18
+controller\Categoryws.py      15      0   100%
+controller\Loginws.py         36     15    58%   21, 39-61
+controller\Logoutws.py         8      0   100%
+controller\Productws.py       71     38    46%   30-32, 40-41, 47-73, 80-82, 89-107, 112-115
+controller\__init__.py         0      0   100%
+controller\catalog.py         25      7    72%   15-19, 25-26
+models\Admin.py               33     11    67%   14-15, 19, 23, 27, 31, 35, 39, 43, 46, 51
+models\Category.py            31      8    74%   19-20, 32, 35, 38, 41, 47, 51
+models\Product.py             92     25    73%   44-52, 56, 60, 68, 76, 84, 92, 96, 100, 108, 116, 124, 127, 130, 143, 146, 150
+models\__init__.py             0      0   100%
+tests\__init__.py              0      0   100%
+tests\conftest.py             15      0   100%
+tests\test_Adminws.py          5      0   100%
+tests\test_Categoryws.py       5      0   100%
+tests\test_Loginws.py         12      0   100%
+tests\test_Logoutws.py         8      0   100%
+tests\test_Productws.py       46      2    96%   36, 47
+tests\test_catalog.py         12      0   100%
+utils\PasswordUtils.py         7      2    71%   7, 11
+utils\__init__.py              0      0   100%
+--------------------------------------------------------
+TOTAL                        474    115    76%

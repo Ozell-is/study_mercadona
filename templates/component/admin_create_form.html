@@ -1,6 +1,6 @@
 <form method="POST" action ="{{ url_for('productWs.create_product') }}" enctype="multipart/form-data" onsubmit="return validateForm();">
 
-
+    <h1>CREATION DE PRODUIT</h1>
 
     <p>
         <label for="libelle">libelle</label>
@@ -60,7 +60,7 @@
     </p>
 
     <p>
-        <button type="submit">Submit</button>
+        <button class="btn btn-danger" type="submit">Submit</button>
     </p>
 </form>
 <script>

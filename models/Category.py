@@ -8,12 +8,14 @@ from app import db
 class Category(db.Model):
     __tablename__ = "Category"
 
-    _id_category = db.Column("id_category", db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    _id_category = db.Column(
+        "id_category", db.Integer, primary_key=True, autoincrement=True, nullable=False
+    )
     _libelle = db.Column("libelle", db.String(20), nullable=False)
     # relationship one-to-many
     _products = db.relationship("Product", backref="category")
 
-    def __init__(self, id_category: int, libelle: str ):
+    def __init__(self, id_category: int, libelle: str):
         self._id_category = id_category
         self._libelle = libelle
 
@@ -29,8 +31,6 @@ class Category(db.Model):
     def libelle(self, libelle: str):
         self._libelle = libelle
 
-
-
     def to_json(self):
         return self.__str__()
 
@@ -41,7 +41,6 @@ class Category(db.Model):
         yield from {
             "id_category": self._id_category,
             "libelle": self._libelle,
-
         }.items()
 
     def __repr__(self):
@@ -49,5 +48,4 @@ class Category(db.Model):
 
     @staticmethod
     def from_json(json_dct):
-        return Product(json_dct["id_category"],
-                       json_dct["libelle"])
+        return Product(json_dct["id_category"], json_dct["libelle"])
