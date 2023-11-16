@@ -7,7 +7,7 @@ from models.Admin import Admin
 
 admin_ws = Blueprint("adminWs", __name__, template_folder="templates")
 
-
+#creer un admin, marche avec psotman
 @admin_ws.post("/createAdmin")
 def create_admin():
     content_type = request.headers.get("Content-Type")
@@ -18,5 +18,4 @@ def create_admin():
         return (
             jsonify({"message": "Administrateur créé avec succès"}),
             200,
-        )  # Réponse avec un message JSON de succès
-        return jsonify({"message": "Requête invalide"}), 400
+        )

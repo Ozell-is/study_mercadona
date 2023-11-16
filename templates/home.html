@@ -75,11 +75,11 @@
             return response.json();
         })
         .then(data => {
-            // Mettez à jour la liste des produits affichés
+
             document.getElementById('productList').innerHTML=data.products;
 
 
-            // Affiche l'ID de la catégorie
+
             console.log( data.products);
         })
         .catch(error => console.error('Error:', error));

@@ -15,6 +15,7 @@ from models.Product import Product
 product_ws = Blueprint("productWs", __name__, template_folder="templates")
 
 
+# redirige vers la page du catalogue
 @product_ws.get("/")
 def get_all_product():
     products = Product.query.all()
@@ -24,6 +25,7 @@ def get_all_product():
     )
 
 
+# redirige vers le back-office
 @product_ws.get("/api/admin")
 @jwt_required()
 def get_admin_page():
@@ -34,6 +36,7 @@ def get_admin_page():
     )
 
 
+# redirige vers la page de creation de produits
 @product_ws.get("/api/admin/create/")
 @jwt_required()
 def create_page():
@@ -41,6 +44,7 @@ def create_page():
     return render_template("create.html", category=category)
 
 
+# envoie le produit creer a la bdd
 @product_ws.post("/api/admin/create")
 def create_product():
     if "image" in request.files:
@@ -64,7 +68,7 @@ def create_product():
                 "category_id": int(request.form.get("category_id")),
                 "pourcentage_promotion": pourcentage_promotion,
                 "date_debut_promotion": request.form.get("date_debut_promotion")
-                or None,
+                                        or None,
                 "date_fin_promotion": request.form.get("date_fin_promotion") or None,
             }
             new_product = Product.from_json(product_data)
@@ -74,6 +78,7 @@ def create_product():
     return json.dumps({"success": False}), 400, {"content_type": "application/json"}
 
 
+# redirige vers  la page d'edition de produits
 @product_ws.get("/api/<int:product_id>/edit/")
 @jwt_required()
 def edit_page(product_id):
@@ -82,6 +87,7 @@ def edit_page(product_id):
     return render_template("edit.html", product=product, category=category)
 
 
+# envoie le produit modifier a la bdd
 @product_ws.post("/api/<int:product_id>/edit/")
 def edit(product_id):
     product = Product.query.get_or_404(product_id)
@@ -107,6 +113,7 @@ def edit(product_id):
     return redirect(url_for("productWs.get_admin_page"))
 
 
+# supprime le produit de la bdd
 @product_ws.post("/api/<int:product_id>/delete/")
 def delete(product_id):
     product = Product.query.get_or_404(product_id)

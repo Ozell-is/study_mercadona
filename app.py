@@ -12,8 +12,6 @@ from controller.Loginws import login_ws
 from controller.Logoutws import logout_ws
 from controller.Productws import product_ws
 
-
-
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -39,7 +37,6 @@ jwt = JWTManager(app)
 
 with app.app_context():
     db.create_all()
-
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ from utils.PasswordUtils import check_password
 
 login_ws = Blueprint("loginWs", __name__, template_folder="templates")
 
-
+#redirige en fonction de la presence ou non du jwt token
 @login_ws.get("/api/redirection")
 def redirection():
     verify_jwt_in_request(optional=True)
@@ -22,12 +22,13 @@ def redirection():
     else:
         return redirect(url_for("loginWs.login_page"))
 
-
+#renvoi vers la pge login
 @login_ws.get("/api/login")
 def login_page():
     return render_template("login.html")
 
 
+#verifie que l'utilisateur existe pour le connecté, sinon le redirige vers la page
 @login_ws.post("/api/login")
 def authenticator():
     username = request.form.get("username")

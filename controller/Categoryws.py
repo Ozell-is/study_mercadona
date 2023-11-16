@@ -11,11 +11,11 @@ from models.Product import Product
 
 category_ws = Blueprint("categoryWs", __name__, template_folder="templates")
 
-
+#renvoi le catalogue filtré
 @category_ws.post("/filter_by_category")
 def filter_by_category():
     selected_category_libelle = request.json["category_libelle"]
-    # print(selected_category_libelle)
+
     new_catalog = filtered_product(selected_category_libelle)
 
     products = render_template(

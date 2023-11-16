@@ -14,7 +14,7 @@
                     <img src="data:image;base64,{{ product.image }}" class="img-fluid" loading="lazy">
                 </div>
                 <h3 class="libelle">{{ product.libelle }}</h3>
-                {#  <div class="category">{{ product.category.libelle }}</div>#}
+
                 {% if product.pourcentage_promotion is not none and product.date_debut_promotion <= now <= product.date_fin_promotion %}
                     <div class="price">
                 <div class="description">{{ product.description }}</div>
