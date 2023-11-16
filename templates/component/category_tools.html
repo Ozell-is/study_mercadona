@@ -3,8 +3,7 @@
     <hr/>
     <p class="lead text-center mb-0">Catégories:</p>
     <select class="form-control" name="category" id="categoryFilter">
-        <option value="all" selected>All</option>
-        <option value="promotion">Promotions</option>
+        <option value="all" selected>catalogue</option>
         {% for category in categories %}
             <option value="{{ category.libelle }}">{{ category.libelle }}</option>
 

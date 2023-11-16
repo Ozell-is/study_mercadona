@@ -1,0 +1,12 @@
+La sécurité :
+
+La connexion s'effectue apres une verification dans la base de donnée que l'utilisateur existe
+Une fois connecté un jwt token est crée afin de confirmer l'identité sur les pages ou ilest possible d'interagir avec la base de donnée.
+Les mots de passe sont crypté avec BCRYPT
+
+Les évolutions possibles :
+
+Transformer le catalogue en site d'achat en ligne
+Mettre en place des envoie de mail lors de promotion, mais cela va polluer
+Mettre une pagination au catalogue coté clients si jamais le volume de donnée est trop important
+Mettre une barre de recherche coté back office afin de pouvoir trouver rapidement le produit sur lequel interagir

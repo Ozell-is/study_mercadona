@@ -4,7 +4,7 @@
 
     <p>
         <label for="libelle">libelle</label>
-        <input type="text" name="libelle"
+        <input type="text" name="libelle" required
                placeholder="libelle">
 
     </p>
@@ -12,7 +12,7 @@
 
     <p>
         <label for="price">price</label>
-        <input type="number" name="price"
+        <input type="number" name="price" required
                placeholder="price">
 
     </p>
@@ -21,6 +21,7 @@
         <label for="description">description</label>
         <br>
         <textarea name="description"
+                   required
                   placeholder="description"
                   rows="15"
                   cols="60"
@@ -28,7 +29,7 @@
 
     <p>
     <label for="category_id">Category</label>
-        <select name="category_id">
+        <select name="category_id" required>
             {% for category in category %}
                 <option value="{{ category.id_category }}">{{ category.libelle }}</option>
             {% endfor %}
@@ -55,8 +56,8 @@
     </p>
 
     <p>
-        <label for="image">Image</label>
-        <input type="file" name="image" formenctype="multipart/form-data">
+        <label for="image"  >Image</label>
+        <input type="file" name="image" formenctype="multipart/form-data" required>
     </p>
 
     <p>

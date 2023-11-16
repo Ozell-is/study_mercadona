@@ -21,12 +21,12 @@
                                     <div class="promo"> - {{ product.pourcentage_promotion }}%</div>
                                     <div class="nouveau_prix">prix en promo : {{ product.price - (product.price * product.pourcentage_promotion / 100) }}€</div>
                                 </div>
-                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
+                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edition</a>
 
                                 <hr>
                                 <form method="POST"
                                       action="{{ url_for('productWs.delete', product_id=product.id_product) }}">
-                                    <input class='btn btn-danger' type="submit" value="Delete Product"
+                                    <input class='btn btn-danger' type="submit" value="SUPPRIMER"
                                            onclick="return confirm('Are you sure you want to delete this entry?')">
                                 </form>
                             </div>
@@ -50,14 +50,14 @@
 
                                 </div>
 
-                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edit</a>
+                                <a class="btn btn-primary" href="{{ url_for('productWs.edit_page',product_id=product.id_product) }}">edition</a>
 
 
 
                                 <hr>
                                 <form method="POST"
                                       action="{{ url_for('productWs.delete', product_id=product.id_product) }}">
-                                    <input class="btn btn-danger" type="submit" value="Delete Product"
+                                    <input class="btn btn-danger" type="submit" value="SUPPRIMER"
                                            onclick="return confirm('Are you sure you want to delete this entry?')">
                                 </form>
                             </div>
